@@ -8,7 +8,7 @@ namespace AuthenticationRequest
     {
         static void Main(string[] args)
         {
-            CreatioLogin login = new CreatioLogin("http://localhost/7.15.1.1295_SalesEnterprise", "Supervisor", "Supervisor");
+            CreatioLogin login = new CreatioLogin("http://mycreatio.com", "Supervisor", "Supervisor");
             login.TryLogin();
             Console.WriteLine("Для выхода нажмите ENTER...");
             Console.ReadLine();
