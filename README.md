@@ -1,8 +1,8 @@
 # AuthenticationRequest
-Example of using AuthService.svc (C#)
-В конструктор класса CreatioLogin передайте свои параметры:
-- url приложения
-- user login
+Example of using AuthService.svc (C#).
+Pass your parameters to the constructor of the CreatioLogin class:
+- application url;
+- user login;
 - user password.
+Use method AddCsrfToken for adding authentication cookie to the next request header.
 
-Для добавления в header аутентификационного cookie используйте метод AddCsrfToken 
