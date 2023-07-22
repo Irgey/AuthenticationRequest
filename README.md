@@ -1,8 +1,12 @@
-# AuthenticationRequest
+# Creatio Test Task (Supprot Developer position)
+
 Example of using AuthService.svc (C#).
-Pass your parameters to the constructor of the CreatioLogin class:
+
+Pass your parameters to the constructor of the CreatioDataFetcher class:
+
 - application url;
 - user login;
 - user password.
-Use method AddCsrfToken for adding authentication cookie to the next request header.
+- Absolute file path, where you want to write request from server
 
+SQL test task located at: SQLTestTask folder
