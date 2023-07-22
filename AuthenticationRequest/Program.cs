@@ -8,8 +8,8 @@ namespace AuthenticationRequest
     {
         static void Main(string[] args)
         {
-            CreatioLogin login = new CreatioLogin("https://01195748-5-demo.creatio.com/", "Supervisor", "Supervisor", "I:/result.html");
-            login.TryLogin();
+            CreatioDataFetcher login = new CreatioDataFetcher("https://01195748-5-demo.creatio.com/", "Supervisor", "Supervisor", "I:/result.html");
+            login.TryFetchData();
             Console.WriteLine("For exit press ENTER...");
             Console.ReadLine();
         }

@@ -5,7 +5,7 @@ using System.Net;
 
 namespace AuthenticationRequest
 {
-    class CreatioLogin
+    class CreatioDataFetcher
     {
         private readonly string _appUrl;
         private CookieContainer _authCookie;
@@ -14,7 +14,7 @@ namespace AuthenticationRequest
         private readonly string _userPassword;
         private readonly string _filePath;
 
-        public CreatioLogin(string appUrl, string userName, string userPassword, string filePath)
+        public CreatioDataFetcher(string appUrl, string userName, string userPassword, string filePath)
         {
             _appUrl = appUrl;
             _authServiceUrl = _appUrl + @"/ServiceModel/AuthService.svc/Login";
@@ -22,7 +22,7 @@ namespace AuthenticationRequest
             _userPassword = userPassword;
             _filePath = filePath;
         }
-        public void TryLogin()
+        public void TryFetchData()
         {
             var authData = @"{
                     ""UserName"":""" + _userName + @""",
