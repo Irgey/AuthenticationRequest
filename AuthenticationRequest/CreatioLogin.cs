@@ -12,12 +12,15 @@ namespace AuthenticationRequest
         private readonly string _authServiceUrl;
         private readonly string _userName;
         private readonly string _userPassword;
-        public CreatioLogin(string appUrl, string userName, string userPassword)
+        private readonly string _filePath;
+
+        public CreatioLogin(string appUrl, string userName, string userPassword, string filePath)
         {
             _appUrl = appUrl;
             _authServiceUrl = _appUrl + @"/ServiceModel/AuthService.svc/Login";
             _userName = userName;
             _userPassword = userPassword;
+            _filePath = filePath;
         }
         public void TryLogin()
         {
@@ -46,6 +49,20 @@ namespace AuthenticationRequest
                     _authCookie.Add(new Uri(_appUrl), new Cookie(authName, authCookeValue));
                 }
             }
+            // After successful authentication, make the GET request
+            string endpoint = _appUrl + "0/odata/Contact?$top=1";
+            string result = GetContacts(endpoint);
+
+            if (!string.IsNullOrEmpty(result))
+            {
+                // Write the result to a text file
+                File.WriteAllText(_filePath, result);
+                Console.WriteLine("Data written to the file: " + _filePath);
+            }
+            else
+            {
+                Console.WriteLine("Failed to retrieve data.");
+            }
         }
         private void AddCsrfToken(HttpWebRequest request)
         {
@@ -73,4 +90,23 @@ namespace AuthenticationRequest
             }
             return request;
         }
+        private string GetContacts(string endpoint)
+        {
+            HttpWebRequest request = CreateRequest(endpoint);
+            request.Method = "GET";
+
+            using (HttpWebResponse response = (HttpWebResponse)request.GetResponse())
+            {
+                if (response.StatusCode == HttpStatusCode.OK)
+                {
+                    using (StreamReader reader = new StreamReader(response.GetResponseStream()))
+                    {
+                        return reader.ReadToEnd();
+                    }
+                }
+            }
+            return null;
+        }
+
+    }
 }
