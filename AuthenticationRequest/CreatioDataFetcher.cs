@@ -38,6 +38,7 @@ namespace AuthenticationRequest
                     using (var reader = new StreamReader(response.GetResponseStream()))
                     {
                         var responseMessage = reader.ReadToEnd();
+                        Console.WriteLine(response.StatusCode);
                         Console.WriteLine(responseMessage);
                         if (responseMessage.Contains("\"Code\":1"))
                         {

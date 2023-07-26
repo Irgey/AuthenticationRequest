@@ -1,8 +1,13 @@
 ﻿--1. Create a query that returns values from the Name and Notes columns for all contacts where the value in the Age column is greater than 3 (assuming that there are concurrent insert and update queries being executed, and our data retrieval query should not be blocked by these insert/update operations).
 
-SELECT *
-FROM [Creatio].[dbo].[Contact] c 
+BEGIN TRANSACTION;
+
+SELECT Name, Notes
+FROM [Creatio].[dbo].[Contact] c WITH (UPDLOCK) -- Використовуємо оптимістичне блокування UPDLOCK
 WHERE Age > 3;
+
+COMMIT TRANSACTION;
+
 
 --2. Optimize the query from step 1 to utilize a non-clustered index for data retrieval. Display the execution time, IO operations, and the execution plan of the query.
 
@@ -29,7 +34,6 @@ SET STATISTICS IO OFF; -- Вимкнути статистику про опер�
 SELECT c.name, c.AccountId
 FROM [Creatio].[dbo].[Contact] c
 INNER JOIN [Creatio].[dbo].[Account] a ON c.AccountId = a.Id
-WHERE Age > 3;
 
 --4. Select all contacts whose names start with the word "iri".
 
@@ -75,12 +79,12 @@ SET STATISTICS TIME OFF; -- Вимкнути статистику про час 
 SET STATISTICS IO OFF; -- Вимкнути статистику про операції вводу/виводу
 
 --7. Display the names of contacts that were created in the year 2019 (CreatedOn column).
-SELECT *
+SELECT Name
 FROM [Creatio].[dbo].[Contact]
 WHERE YEAR(CreatedOn) = 2019;
 
 --8. Count the number of contacts where the AccountId column is populated and the Notes column contains the word "test" or the age is less than 40.
-SELECT *
+SELECT count(AccountId)
 FROM [Creatio].[dbo].[Contact]
 WHERE AccountId IS NOT NULL
 AND (Notes LIKE '%test%' OR Age < 40);
